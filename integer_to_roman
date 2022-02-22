@@ -1,0 +1,95 @@
+class Solution 
+{
+public:
+    string intToRoman(int num) 
+    {
+        string roman="";
+        map<int,char> mp;
+        map<int,char>::iterator it;
+        mp[1] = 'I';
+        mp[5] = 'V';
+        mp[10] = 'X';
+        mp[50] = 'L';
+        mp[100] = 'C';
+        mp[500] = 'D';
+        mp[1000] = 'M';
+        int i=0;
+        int digit,digit_10;
+        char prev, next;
+        string roman_instance;
+        while(num!=0)
+        {
+            digit = num%10;
+            digit_10 = digit*pow(10,i++);
+            num = num/10;
+            for(it = mp.begin(); it != mp.end(); it++)
+            {
+                if(digit_10 >= it->first && digit_10 < std::next(it,1)->first)
+                {
+                    break;
+                }
+            }
+            if(digit_10>=1000)
+            {
+                it--;
+            }
+            if(digit >=1 && digit <5)
+            {
+                if(digit_10 == it->first)
+                {
+                    roman_instance = it->second;
+                }
+                else if(digit_10 == 2*(it->first))
+                {
+                    roman_instance = it->second; 
+                        roman_instance += it->second;
+                }
+                else if(digit_10 == 3*(it->first))
+                {
+                    roman_instance = it->second;
+                    roman_instance += it->second;
+                    roman_instance += it->second;
+                }
+                else
+                {
+                    roman_instance = it->second; 
+                        roman_instance += std::next(it,1)->second;
+                }
+            }
+            else if(digit>=5)
+            {
+                if(digit_10 == it->first)
+                {
+                    roman_instance = it->second;
+                }
+                else if(digit_10 == it->first + std::prev(it,1)->first)
+                {
+                    roman_instance = it->second;
+                        roman_instance+= std::prev(it,1)->second;
+                }
+                else if(digit_10 == it->first + 2*(std::prev(it,1)->first))
+                {
+                    roman_instance = it->second; 
+                    roman_instance    += std::prev(it,1)->second; 
+                    roman_instance    += std::prev(it,1)->second;
+                }
+                else if(digit_10 == it->first + 3*(std::prev(it,1)->first))
+                {
+                    roman_instance = it->second;
+                    roman_instance    += std::prev(it,1)->second; 
+                    roman_instance    += std::prev(it,1)->second;
+                    roman_instance    += std::prev(it,1)->second;
+                }
+                else if(digit_10 == it->first + 4*(std::prev(it,1)->first))
+                {
+                    roman_instance = std::prev(it,1)->second; 
+                    roman_instance    += std::next(it,1)->second;
+                }
+            }
+            roman = roman_instance + roman;
+            roman_instance = "";
+            cout<<roman_instance<<" "<<roman<<" ";
+        }
+        return roman;
+    }
+};
