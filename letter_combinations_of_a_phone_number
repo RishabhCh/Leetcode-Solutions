@@ -1,0 +1,42 @@
+class Solution 
+{
+public:
+    unordered_map<char,string> letter_combo;
+    vector<string> result;
+    
+    void find_combinations(string digits, int num_digits, string res)
+    {
+        if(num_digits==digits.length())
+        {
+            result.push_back(res);
+            return;
+        }
+        for(int j=0;j<letter_combo[digits[num_digits]].length();j++)
+        {
+            find_combinations(digits,num_digits+1,res+letter_combo[digits[num_digits]][j]);   
+        }
+    }
+    
+    vector<string> letterCombinations(string digits) 
+    {
+        if(digits=="")
+        {
+            return result;
+        }
+        
+        letter_combo['2'] = "abc";
+        letter_combo['3'] = "def";
+        letter_combo['4'] = "ghi";
+        letter_combo['5'] = "jkl";
+        letter_combo['6'] = "mno";
+        letter_combo['7'] = "pqrs";
+        letter_combo['8'] = "tuv";
+        letter_combo['9'] = "wxyz";
+        
+        string str = "";
+        
+        find_combinations(digits,0,str);
+        
+        return result;
+    }
+};
