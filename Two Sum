@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) 
+    {
+        vector<int> result;
+        unordered_map <int,int> mp,mp2;
+        for(int i=0;i<nums.size();i++)
+        {
+            mp[nums[i]]=i;
+            mp2[nums[i]]=target-nums[i];
+        }
+        unordered_map <int,int>::iterator it;
+        for(int i=0;i<nums.size();i++)
+        {
+            cout<<mp[nums[i]]<<" "<<mp2[nums[i]];
+            if(mp.find(mp2[nums[i]])!=mp.end() && i!=mp[mp2[nums[i]]])
+            {
+                cout<<"found";
+                result.push_back(i);
+                result.push_back(mp[mp2[nums[i]]]);
+                break;
+            }
+        }
+        return result;
+    }
+};
