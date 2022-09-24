@@ -1,0 +1,72 @@
+class Solution 
+{
+public:
+    vector<string> result;
+    int number_of_parentheses;
+    bool check_valid_parentheses(vector<char> ans)
+    {
+        stack<char> st;
+        for(int i=0;i<ans.size();i++)
+        {
+            if(ans[i]==')' && (st.empty() || st.top()==')'))
+            {
+                return false;
+            }
+            if(ans[i]=='(')
+            {
+                st.push(ans[i]);
+            }
+            if(ans[i]==')' && st.top()=='(')
+            {
+                st.pop();
+            }
+        }
+        if(st.empty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    void backtrack(int x,vector<char> ans)
+    {
+        if(x==number_of_parentheses)
+        {
+            if(check_valid_parentheses(ans))
+            {
+                string res = "";
+                for(int j=0;j<number_of_parentheses;j++)
+                {
+                    cout<<ans[j];
+                    res+=ans[j];
+                }
+                cout<<"\n";
+                result.push_back(res);
+            }
+            return;
+        }
+        
+        for(int i=0;i<2;i++)
+        {
+            if(i==0)
+            {
+                ans.push_back('(');
+            }
+            else
+            {
+                ans.push_back(')');
+            }
+            backtrack(x+1,ans);
+            ans.pop_back();
+        }
+    }
+    vector<string> generateParenthesis(int n) 
+    {
+        number_of_parentheses = 2*n;
+        vector<char> ans;
+        backtrack(0,ans);
+        return result;
+    }
+};
